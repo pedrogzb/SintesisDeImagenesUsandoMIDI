@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4379072aef0a6d048a813a53080c8728, type: 3}
+  m_Name: ReferenciasNotasOctavasEntornoDePrueba
+  m_EditorClassIdentifier: 
+  _referenciasNotas:
+  - _TrigNoteC
+  - _TrigNoteC_1
+  - _TrigNoteD
+  - _TrigNoteD_1
+  - _TrigNoteE
+  - _TrigNoteF
+  - _TrigNoteF_1
+  - _TrigNoteG
+  - _TrigNoteG_1
+  - _TrigNoteA
+  - _TrigNoteA_1
+  - _TrigNoteB
+  _referenciasOctavas:
+  - _TrigEscala_1
+  - _TrigEscala0
+  - _TrigEscala1
+  - _TrigEscala2
+  - _TrigEscala3
+  - _TrigEscala4
+  - _TrigEscala5
+  - _TrigEscala6
+  - _TrigEscala7
+  - _TrigEscala8
+  - _TrigEscala9

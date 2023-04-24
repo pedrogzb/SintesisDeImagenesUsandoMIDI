@@ -4,8 +4,7 @@ using System.Collections.Generic;
 //[RequireComponent(typeof(InputFilter))]
 public class FadeOut : MonoBehaviour, IConexionFilterPreprocesado
 {
-    [SerializeField] string[] referenciasNotas = new string[12];
-    [SerializeField] string[] referenciasOctavas = new string[11];
+    [SerializeField] private ReferenciasNotasOctavasSO _referencias;
     [SerializeField] float _segundosFadeOut;
     private const float NUMERO_DE_PASOS = 10f;
     private readonly bool[] flagNotas = new bool[12];
@@ -16,7 +15,7 @@ public class FadeOut : MonoBehaviour, IConexionFilterPreprocesado
     
     void Awake()
     {
-        _renderer = this.GetComponent<Renderer>();
+        _renderer = GetComponent<Renderer>();
         _propertyBlock = new MaterialPropertyBlock();
     }
     public void NotaPulsada(Vector3Int pulsacion)
@@ -27,8 +26,8 @@ public class FadeOut : MonoBehaviour, IConexionFilterPreprocesado
         flagNotas[_indiceNota] = true;
         flagOctavas[_indiceOctava] = true;
 
-        _propertyBlock.SetFloat(referenciasNotas[_indiceNota], 1);
-        _propertyBlock.SetFloat(referenciasOctavas[_indiceOctava], 1);
+        _propertyBlock.SetFloat(_referencias.getReferenciaNota(pulsacion.x), 1);
+        _propertyBlock.SetFloat(_referencias.getReferenciaOctava(pulsacion.y), 1);
 
         _pulsacionesOctava[_indiceOctava]++;
         //Debug.Log(string.Format("Pulsación -> Octava: {0};   Valor: {1}", pulsacion.y, _pulsacionesOctava[_indiceOctava]));
@@ -53,7 +52,7 @@ public class FadeOut : MonoBehaviour, IConexionFilterPreprocesado
 
     IEnumerator FadeNota( int _indiceNota)
     {
-        string _referenciaNota = referenciasNotas[_indiceNota];
+        string _referenciaNota = _referencias.getReferenciaNota(_indiceNota);
         for (float i = 0; i < NUMERO_DE_PASOS; i++)
         {
             if (flagNotas[_indiceNota])break; 
@@ -64,7 +63,7 @@ public class FadeOut : MonoBehaviour, IConexionFilterPreprocesado
     }
     IEnumerator FadeOctava(int _indiceOctava)
     {
-        string _referenciaOctava = referenciasOctavas[_indiceOctava];
+        string _referenciaOctava = _referencias.getReferenciaOctava(_indiceOctava-1);
         for (int i = 0; i < NUMERO_DE_PASOS; i++)
         {
             if (flagNotas[_indiceOctava])break;

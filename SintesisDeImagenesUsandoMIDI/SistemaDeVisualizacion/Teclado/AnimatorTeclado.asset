@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7dc96a69a2948754e9837e2d18852f6f, type: 3}
+  m_Name: AnimatorTeclado
+  m_EditorClassIdentifier: 
+  ConOctavas: 1
+  nombresDeSalida:
+  - Nota
+  - Pulsado
+  - Despulsado
+  tipoSalida: 000000000300000003000000
+  zonaEjecucion: 000000000000000001000000
+  opcionesDeCalculo: 030000000300000003000000
+  opcionesDeRemap: 000000000000000000000000
+  remap:
+  - {x: -48, y: 25, z: 1, w: 1}
+  - {x: 0, y: 0, z: 0, w: 0}
+  - {x: 0, y: 0, z: 0, w: 0}
+  Count: 3

@@ -1,5 +1,4 @@
 using UnityEngine;
-
 public interface IConexionFilterPreprocesado
 {
     public void NotaPulsada(Vector3Int pulsacion);

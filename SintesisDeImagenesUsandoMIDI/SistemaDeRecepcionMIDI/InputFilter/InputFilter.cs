@@ -11,6 +11,10 @@ public class InputFilter : MonoBehaviour,IConexionManagerFilter
     [Header("Filtrar según el rango de octavas. Rango de -1:9")]
     [SerializeField] private bool FiltrarPorOctava;
     [SerializeField] private Vector2Int _RangoOctavaAFiltrar;//Canal a filtrar en el rango -1 a 9
+    [SerializeField][Header("Habilitar reprodución de salida de los mensajes MIDI")]
+    private bool HabilitarSalidaMIDI;
+    [SerializeField] private GameObject objetoSalidaMIDI;
+    private IConexionInputOutputDevice _referenciaOutput;
     private IConexionFilterPreprocesado _referencia;
     private Queue<Vector3Int> _NotasOn;
     private Queue<Vector3Int> _NotasOff;
@@ -18,7 +22,8 @@ public class InputFilter : MonoBehaviour,IConexionManagerFilter
     public void Start()
     {
         _referencia = GetComponent<IConexionFilterPreprocesado>();
-        _NotasOn = new Queue<Vector3Int>();
+        _referenciaOutput = (objetoSalidaMIDI==null)?null: objetoSalidaMIDI.GetComponent<IConexionInputOutputDevice>();
+        _NotasOn  = new Queue<Vector3Int>();
         _NotasOff = new Queue<Vector3Int>();
         StartManejoDeColas();
     }
@@ -32,14 +37,10 @@ public class InputFilter : MonoBehaviour,IConexionManagerFilter
         int _nota = NoteOn.y % 12;
         int _velocity = NoteOn.z;
         _NotasOn.Enqueue(new Vector3Int(_nota, _octava, _velocity));
-        //_NotaOnChaged = true;
-        //_referencia.NotaPulsada(new Vector3Int(_nota, _octava,_velocity));
-
-
+        if (HabilitarSalidaMIDI) _referenciaOutput?.SendEventoMidiNoteOn(new Vector3Int(_canal,NoteOn.y,_velocity));
     }
     public void EventoMidiNoteOff(Vector3Int NoteOff)
     {
-        //Debug.Log($"Nota despulsada desde el filter");
         int _canal = NoteOff.x;
         if (FiltrarPorCanal && (_canal < _RangoCanalAFiltrar.x || _canal > _RangoCanalAFiltrar.y)) return;
 
@@ -48,8 +49,7 @@ public class InputFilter : MonoBehaviour,IConexionManagerFilter
         int _nota = NoteOff.y % 12;
         int _velocity = NoteOff.z;
         _NotasOff.Enqueue(new Vector3Int(_nota, _octava, _velocity));
-        //_NotaOffChaged = true;
-        //_referencia.NotaDesPulsada(new Vector3Int(_nota, _octava, _velocity));
+        if (HabilitarSalidaMIDI) _referenciaOutput?.SendEventoMidiNoteOff(new Vector3Int(_canal, NoteOff.y, _velocity));
     }
     private void StartManejoDeColas() 
     {
@@ -81,4 +81,3 @@ public class InputFilter : MonoBehaviour,IConexionManagerFilter
     public void OnApplicationQuit()=>StopAllCoroutines();
     
 }
-

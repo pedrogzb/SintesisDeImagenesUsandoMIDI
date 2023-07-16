@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5d84dacc9eaae445a299c9d71949524, type: 3}
+  m_Name: EfectoPulsoModLit
+  m_EditorClassIdentifier: 
+  ConOctavas: 0
+  RapidezTransicion: 0.208
+  nombresDeSalida:
+  - _Velocidad
+  - _Alpha
+  - _Scale
+  - _Grosor
+  - _Difuminado
+  opcionesDeCalculo: 0000000003000000040000000100000002000000
+  tipoSalida: 0100000001000000010000000100000001000000
+  opcionesDeRemap: 0000000000000000000000000200000002000000
+  zonaEjecucion: 0000000000000000010000000000000000000000
+  remap:
+  - {x: -2, y: 6, z: 0, w: 1.4}
+  - {x: 0, y: 4, z: 2, w: 60}
+  - {x: -1, y: 4, z: 2, w: 2}
+  - {x: 0.3, y: 0.7, z: 0.083333336, w: -0.2}
+  - {x: 0.3, y: 0.7, z: 0.041666668, w: 0.1}
+  Count: 5

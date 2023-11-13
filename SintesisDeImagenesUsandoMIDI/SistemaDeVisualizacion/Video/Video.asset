@@ -13,13 +13,13 @@ MonoBehaviour:
   m_Name: Video
   m_EditorClassIdentifier: 
   ConOctavas: 1
-  RapidezTransicion: 0.652
+  RapidezTransicion: 0.05
   nombresDeSalida:
   - _Filt
-  opcionesDeCalculo: 00000000
   tipoSalida: 01000000
-  opcionesDeRemap: 00000000
   zonaEjecucion: 00000000
+  opcionesDeCalculo: 00000000
+  opcionesDeRemap: 00000000
   remap:
-  - {x: 0, y: 15, z: -7, w: 1}
+  - {x: 0, y: 15, z: -0.45, w: 1}
   Count: 1

@@ -1,4 +1,3 @@
-using System;
 using Melanchall.DryWetMidi.Multimedia;
 using Melanchall.DryWetMidi.Core;
 using UnityEngine;
@@ -14,17 +13,17 @@ public class InputMidiFile : MonoBehaviour
     [SerializeField]
     private GameObject objetoSalidaMIDI;
     private Playback _playback;
-    private string MidiFileName;
     [SerializeField][Header("Habilitar reprodución en bucle del archivo MIDI")]
     private bool ReproducirEnBucle;
     private IConexionManagerFilter[] _referenciasConexion;
     private IConexionInputOutputDevice _referenciaOutputDevice;
-
+    private void Awake()=>InicializarMidiFile();
+    
     private void Start()
     {
-        InicializarMidiFile();
         _referenciasConexion = GetComponentsInChildren<IConexionManagerFilter>();
         _referenciaOutputDevice = (objetoSalidaMIDI == null) ? null : objetoSalidaMIDI.GetComponent<IConexionInputOutputDevice>();
+        if (GetComponentsInParent<SyncMidiFiles>().Length == 0) EmpezarReproduccion();
     }
     private void OnMidiEventPlayed(object sender, MidiEventPlayedEventArgs e)
     {
@@ -33,7 +32,7 @@ public class InputMidiFile : MonoBehaviour
             NoteEvent noteEvent = (NoteEvent)e.Event;
             //Debug.Log($"Event received from '{MidiFileName}' at {DateTime.Now}: {e.Event.EventType}");
             //Debug.Log($"Canal: {noteEvent.Channel}. Nota: {noteEvent.NoteNumber}. Velocity: {noteEvent.Velocity}");
-            EnviarEnventoNoteOn(new Vector3Int(noteEvent.Channel, noteEvent.NoteNumber, noteEvent.Velocity));
+            EnviarEventoNoteOn(new Vector3Int(noteEvent.Channel, noteEvent.NoteNumber, noteEvent.Velocity));
             if (HabilitarSalidaMIDI) _referenciaOutputDevice?.SendEventoMidiNoteOn(e.Event);
         }
         if (e.Event.EventType == MidiEventType.NoteOff)
@@ -41,41 +40,39 @@ public class InputMidiFile : MonoBehaviour
             NoteEvent noteEvent = (NoteEvent)e.Event;
             //Debug.Log($"Event received from '{MidiFileName}' at {DateTime.Now}: {e.Event.EventType}");
             //Debug.Log($"Canal: {noteEvent.Channel}. Nota: {noteEvent.NoteNumber}. Velocity: {noteEvent.Velocity}");
-            EnviarEnventoNoteOff(new Vector3Int(noteEvent.Channel, noteEvent.NoteNumber, noteEvent.Velocity));
+            EnviarEventoNoteOff(new Vector3Int(noteEvent.Channel, noteEvent.NoteNumber, noteEvent.Velocity));
             if (HabilitarSalidaMIDI) _referenciaOutputDevice?.SendEventoMidiNoteOff(e.Event);
         }
     }
-    public void EnviarEnventoNoteOn(Vector3Int EventoNoteOn)
+    public void EnviarEventoNoteOn(Vector3Int EventoNoteOn)
     {
         foreach (IConexionManagerFilter _conexion in _referenciasConexion)
             _conexion.EventoMidiNoteOn(EventoNoteOn);
     }
-    public void EnviarEnventoNoteOff(Vector3Int EventoNoteOff)
+    public void EnviarEventoNoteOff(Vector3Int EventoNoteOff)
     {
         foreach (IConexionManagerFilter _conexion in _referenciasConexion)
             _conexion.EventoMidiNoteOff(EventoNoteOff);
     }
     private void InicializarMidiFile() 
     {
-
         try 
         {
-            MidiFileName = SelectorInputFile.obtenerNombre(PosicionDeSeleccion);
-            Debug.Log($"Initializing MidiFile [{MidiFileName}]...");
+            string MidiFileName = SelectorInputFile.obtenerNombre(PosicionDeSeleccion);
+            Debug.Log($"Inicializando el dispositivo de entrada [{MidiFileName}]...");
             MidiFile midiFile = MidiFile.Read(string.Concat("Assets/SintesisDeImagenesUsandoMidi/Resources/", MidiFileName, ".mid"));
             _playback = midiFile.GetPlayback();
             _playback.Loop = ReproducirEnBucle;
             _playback.EventPlayed += OnMidiEventPlayed;
-            _playback.Start();
-            Debug.Log($"MidiFile [{MidiFileName}] initialized");
+            Debug.Log($"MidiFile [{MidiFileName}] inicializado");
         }
         catch
         {
-            Debug.Log($"No existe el archivo [{MidiFileName}].Recuerda que se tiene que encontrar en Assets/SintesisDeImagenesUsandoMidi/Resources/");
-        }
-        
-        
+            string MidiFileName = SelectorInputFile.obtenerNombre(PosicionDeSeleccion);
+            Debug.Log($"No existe el archivo [{MidiFileName}].Recuerda que se tiene que encontrar en un subdirectorio de Assets/SintesisDeImagenesUsandoMidi/Resources/");
+        }       
     }
+    public void EmpezarReproduccion() => _playback.Start();
     private void OnApplicationQuit()
     {
         if (_playback != null)

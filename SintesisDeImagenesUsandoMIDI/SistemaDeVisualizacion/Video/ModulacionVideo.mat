@@ -30,7 +30,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     - _ColorMap:
         m_Texture: {fileID: 2800000, guid: 2fd6421f253b4ef1a19526541f9ffc0c, type: 3}
-        m_Scale: {x: 0.94, y: 1}
+        m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _DetailAlbedoMap:
         m_Texture: {fileID: 0}
@@ -81,7 +81,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Ints:
-    - _Selector: 0
+    - _Selector: 2
     m_Floats:
     - _AlphaClip: 0
     - _Blend: 0
@@ -94,7 +94,7 @@ Material:
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
     - _EnvironmentReflections: 1
-    - _Filt: 0
+    - _Filt: 3.4340065
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0

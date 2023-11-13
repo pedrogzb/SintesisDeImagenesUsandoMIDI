@@ -11,33 +11,32 @@ public class OutputDevices : MonoBehaviour,IConexionInputOutputDevice
     private OutputDevice _outputDevice;
     [SerializeField]
     private SelectorRecursoSalidaSO SelectorOutput;
-    private string OutputDeviceName;
     [SerializeField] 
     private bool UsarValorDeVelocidad;
     [SerializeField][Header("Manda los mensajes de programa a cada canal \npara que se actualicen")]
     private bool ActualizarNumerosDePrograma = false;
-    BytesToMidiEventConverter bytesToMidi;
+    private BytesToMidiEventConverter bytesToMidi;
     private void Start()
     {
         bytesToMidi = new BytesToMidiEventConverter();
-        InitializeOutputDevice();
+        InicializarOutputDevice();
     }
-    private void InitializeOutputDevice()
+    private void InicializarOutputDevice()
     {
-        OutputDeviceName = SelectorOutput.NombreDeRecursoSalida;
+        string OutputDeviceName = SelectorOutput.NombreDeRecursoSalida;
         Debug.Log($"Initializing output device [{OutputDeviceName}]...");
         var allOutputDevices = OutputDevice.GetAll();
         if (!allOutputDevices.Any(d => d.Name == OutputDeviceName))
         {
             var allDevicesList = string.Join(Environment.NewLine, allOutputDevices.Select(d => $"  {d.Name}"));
-            Debug.Log($"There is no [{OutputDeviceName}] device presented in the system. Here the list of all device:{Environment.NewLine}{allDevicesList}");
+            Debug.Log($"No está el dispositivo [{OutputDeviceName}] en el sistema. Aquí se muestra una lista de los dispositivos:{Environment.NewLine}{allDevicesList}");
             return;
         }
 
         _outputDevice = OutputDevice.GetByName(OutputDeviceName);
         _outputDevice.PrepareForEventsSending();
         ActualizarNumeroDePrograma();
-        Debug.Log($"Output device [{OutputDeviceName}] initialized.");
+        Debug.Log($"Output device [{OutputDeviceName}] inicializado.");
     }
     public void SendEventoMidiNoteOn(Vector3Int mensaje) 
     {
@@ -57,7 +56,6 @@ public class OutputDevices : MonoBehaviour,IConexionInputOutputDevice
     {
         byte[] mensajeCambioDeTono = { (byte)(0b_1100_0000 + FourBitNumber.Values[numeroDeCanal]), SevenBitNumber.Values[numeroDePrograma] };
         _outputDevice.SendEvent(bytesToMidi.Convert(mensajeCambioDeTono));
-        //Debug.Log("Se ha mandado el mensaje de Cambio de Canal");
     }
     public void ActualizarNumeroDePrograma() 
     {

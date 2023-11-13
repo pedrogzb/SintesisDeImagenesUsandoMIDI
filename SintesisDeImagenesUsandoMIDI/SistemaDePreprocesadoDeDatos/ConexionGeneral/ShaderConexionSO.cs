@@ -20,17 +20,15 @@ public class ShaderConexionSO : ScriptableObject
     private float MaxPorFrame;
     private int[] auxMaxMin;
     private int indiceMax;
-    //private int valorMax;
-    private float Min;//TODO
-    private float MinPorFrame;//TODO
+    private float Min;
+    private float MinPorFrame;
     private int indiceMin;
-    //private int valorMin;
-    private float Media;//TODO
-    private float MediaPorFrame;//TODO
-    private float UltimaPulsada;//TODO
-    private float UltimaPulsadaPorFrame;//TODO
-    private float UltimaDesPulsada;//TODO
-    private float UltimaDesPulsadaPorFrame;//TODO
+    private float Media;
+    private float MediaPorFrame;
+    private float UltimaPulsada;
+    private float UltimaPulsadaPorFrame;
+    private float UltimaDesPulsada;
+    private float UltimaDesPulsadaPorFrame;
 
     public bool Inicializar() 
     {

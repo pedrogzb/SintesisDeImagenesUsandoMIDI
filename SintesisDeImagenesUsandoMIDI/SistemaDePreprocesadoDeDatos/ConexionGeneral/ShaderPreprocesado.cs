@@ -1,13 +1,9 @@
 using OpcionesConexionPreprocesado;
-using System.Collections.Generic;
 using UnityEngine;
-
-
-
 public class ShaderPreprocesado : MonoBehaviour, IConexionFilterPreprocesado
 {
     [SerializeField] private Material _material;
-    [SerializeField] ShaderConexionSO _shaderConexion;
+    [SerializeField] private ShaderConexionSO _shaderConexion;
     [SerializeField] private bool PorFrame;
 
     private void Start()

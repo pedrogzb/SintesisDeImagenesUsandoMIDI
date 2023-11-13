@@ -1,7 +1,5 @@
 using UnityEngine;
 using System.Collections;
-using System.Collections.Generic;
-//[RequireComponent(typeof(InputFilter))]
 public class FadeOut : MonoBehaviour, IConexionFilterPreprocesado
 {
     [SerializeField] private ReferenciasNotasOctavasSO _referencias;
@@ -50,7 +48,7 @@ public class FadeOut : MonoBehaviour, IConexionFilterPreprocesado
          
     }
 
-    IEnumerator FadeNota( int _indiceNota)
+    private IEnumerator FadeNota( int _indiceNota)
     {
         string _referenciaNota = _referencias.getReferenciaNota(_indiceNota);
         for (float i = 0; i < NUMERO_DE_PASOS; i++)
@@ -61,7 +59,7 @@ public class FadeOut : MonoBehaviour, IConexionFilterPreprocesado
             yield return new WaitForSeconds(_segundosFadeOut / NUMERO_DE_PASOS);
         }
     }
-    IEnumerator FadeOctava(int _indiceOctava)
+    private IEnumerator FadeOctava(int _indiceOctava)
     {
         string _referenciaOctava = _referencias.getReferenciaOctava(_indiceOctava-1);
         for (int i = 0; i < NUMERO_DE_PASOS; i++)

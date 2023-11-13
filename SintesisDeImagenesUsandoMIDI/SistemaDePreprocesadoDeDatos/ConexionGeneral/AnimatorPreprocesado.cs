@@ -1,13 +1,9 @@
 using OpcionesConexionPreprocesado;
-using System.Collections.Generic;
 using UnityEngine;
-
-
-
 public class AnimatorPreprocesado : MonoBehaviour, IConexionFilterPreprocesado
 {
     [SerializeField] private Animator _animator;
-    [SerializeField] AnimatorConexionSO _animatorConexion;
+    [SerializeField] private AnimatorConexionSO _animatorConexion;
 
     private void Start()
     {

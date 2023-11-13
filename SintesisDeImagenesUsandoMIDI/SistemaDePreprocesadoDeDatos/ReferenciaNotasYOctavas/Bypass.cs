@@ -1,7 +1,4 @@
 using UnityEngine;
-using System;
-using System.Collections.Generic;
-//[RequireComponent(typeof(InputFilter))]
 public class Bypass : MonoBehaviour, IConexionFilterPreprocesado
 {
     [SerializeField] private ReferenciasNotasOctavasSO _referencias;

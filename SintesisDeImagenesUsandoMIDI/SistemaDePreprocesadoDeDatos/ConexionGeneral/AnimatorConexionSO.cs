@@ -7,10 +7,10 @@ using UnityEngine;
 public class AnimatorConexionSO : ScriptableObject
 {
     [SerializeField] private bool ConOctavas;
-    [SerializeField] List<string> nombresDeSalida;
+    [SerializeField] public List<string> nombresDeSalida;
     [SerializeField] public List<TipoSalidaAnimator> tipoSalida;
     [SerializeField] public List<ZonaEjecucion> zonaEjecucion;
-    [SerializeField] List<OpcionesDeCalculo> opcionesDeCalculo;
+    [SerializeField] public List<OpcionesDeCalculo> opcionesDeCalculo;
     [SerializeField] public List<OpcionesDeRemapAnimator> opcionesDeRemap;
     [SerializeField] public List<Vector4> remap;
     [HideInInspector]public int Count;
@@ -20,9 +20,9 @@ public class AnimatorConexionSO : ScriptableObject
     private int indiceMax;
     private float Min;
     private int indiceMin;
-    private float Media;//TODO
-    private float UltimaPulsada;//TODO
-    private float UltimaDesPulsada;//TODO
+    private float Media;
+    private float UltimaPulsada;
+    private float UltimaDesPulsada;
     
     public bool Inicializar() 
     {
@@ -42,7 +42,7 @@ public class AnimatorConexionSO : ScriptableObject
         int valorNota = (ConOctavas) ? (notaOn.x + 12 * (notaOn.y + 1)) : notaOn.x;
         UltimaPulsada = valorNota;
         Media = (Media==0)? valorNota:((valorNota + Media) / 2);
-        gestionarMax(notaOn.x);
+        gestionarMaxMin(notaOn.x);
         Max = indiceMax;
         Min = indiceMin;
     }
@@ -68,25 +68,20 @@ public class AnimatorConexionSO : ScriptableObject
         {
             OpcionesDeRemapAnimator.ModuloReescalado => ((numero + vec.x) % vec.y + vec.z) * vec.w,
             OpcionesDeRemapAnimator.ClampReescalado =>  (Mathf.Min(Mathf.Max(numero,vec.x),vec.y)*vec.z+vec.w),
-            OpcionesDeRemapAnimator.ReescaladoClamp => (Mathf.Min(Mathf.Max(numero * vec.z + vec.w, vec.x), vec.y) ),
+            OpcionesDeRemapAnimator.ReescaladoClamp => (Mathf.Min(Mathf.Max(numero * vec.z + vec.w, vec.x), vec.y)),
             _ => -1,
         };
     }
-    private void gestionarMax(int valor) 
+    private void gestionarMaxMin(int valor) 
     {
         auxMaxMin[valor]++;
         if (indiceMax == -1) { indiceMax = valor; indiceMin = valor; return;}
         for(int i=0; i < 12; i++) 
         {
             if (auxMaxMin[indiceMax] < auxMaxMin[i]) 
-            {
                 indiceMax = i;
-                //valorMax = auxMaxMin[i];
-            }
             if (auxMaxMin[i]!=0 && auxMaxMin[indiceMin] > auxMaxMin[i])
-            {
                 indiceMin = i;
-            }
         }
         //Debug.Log($"El valor del array es " +
         //    $"[{auxMaxMin[0]},{auxMaxMin[1]},{auxMaxMin[2]},{auxMaxMin[3]}," +

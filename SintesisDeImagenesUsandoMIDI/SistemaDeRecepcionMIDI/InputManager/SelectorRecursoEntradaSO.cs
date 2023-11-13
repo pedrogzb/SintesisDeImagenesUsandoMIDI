@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,5 +8,5 @@ public class SelectorRecursoEntradaSO : ScriptableObject
     [SerializeField] 
     private List<string> NombresDeRecursos = new List<string>();
     public string obtenerNombre(int PosicionDeSeleccion) => 
-        (PosicionDeSeleccion<= NombresDeRecursos.Count)? NombresDeRecursos[PosicionDeSeleccion - 1]:"Nombre no Registrado";
+        (PosicionDeSeleccion<= NombresDeRecursos.Count && PosicionDeSeleccion > 0) ? NombresDeRecursos[PosicionDeSeleccion - 1]:"Nombre no Registrado";
 }
